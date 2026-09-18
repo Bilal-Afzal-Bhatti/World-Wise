@@ -1,0 +1,336 @@
+export type LanguageCode = "en" | "de" | "fr" | "it" | "es" | "ur";
+
+export interface LanguageOption {
+  code: LanguageCode;
+  label: string;
+  nativeLabel: string;
+  flag: string; // emoji flag shown in the picker
+  isRTL?: boolean;
+}
+
+export const languages: LanguageOption[] = [
+  { code: "en", label: "English", nativeLabel: "English", flag: "🇬🇧" },
+  { code: "de", label: "German", nativeLabel: "Deutsch", flag: "🇩🇪" },
+  { code: "fr", label: "French", nativeLabel: "Français", flag: "🇫🇷" },
+  { code: "it", label: "Italian", nativeLabel: "Italiano", flag: "🇮🇹" },
+  { code: "es", label: "Spanish", nativeLabel: "Español", flag: "🇪🇸" },
+  { code: "ur", label: "Urdu", nativeLabel: "اردو", flag: "🇵🇰", isRTL: true },
+];
+
+export type TranslationKey =
+  | "appName"
+  | "tagline"
+  | "descriptionLine1"
+  | "descriptionLine2"
+  | "moreInfo"
+  | "searchPlaceholder"
+  | "explore"
+  | "list"
+  | "quiz"
+  | "surpriseMe"
+  | "seenOf"
+  | "world"
+  | "continent"
+  | "region"
+  | "capital"
+  | "population"
+  | "area"
+  | "density"
+  | "government"
+  | "founded"
+  | "languages"
+  | "currency"
+  | "callingCode"
+  | "neighbours"
+  | "readOnWikipedia"
+  | "settings"
+  | "theme"
+  | "language"
+  | "takeQuizAbout"
+  | "all"
+  | "country"
+  | "africa"
+  | "americas"
+  | "asia"
+  | "europe"
+  | "oceania"
+  | "whatIsCapitalOf"
+  | "correct"
+  | "incorrect"
+  | "next"
+  | "score"
+  | "favorites"
+  | "noFavoritesYet";
+
+export const translations: Record<LanguageCode, Record<TranslationKey, string>> = {
+  en: {
+    appName: "Know the World",
+    tagline: "One country at a time.",
+    descriptionLine1: "Every visit shows a random country or territory — its flag, location",
+    descriptionLine2: "on the map and more. Browse the list or test yourself in the quiz.",
+    moreInfo: "More info...",
+    searchPlaceholder: "Search a country...",
+    explore: "Explore",
+    list: "List",
+    quiz: "Quiz",
+    surpriseMe: "Surprise me",
+    seenOf: "of {total} seen",
+    world: "World",
+    continent: "Continent",
+    region: "Region",
+    capital: "Capital",
+    population: "Population",
+    area: "Area",
+    density: "Density",
+    government: "Government",
+    founded: "Founded",
+    languages: "Languages",
+    currency: "Currency",
+    callingCode: "Calling Code",
+    neighbours: "Neighbours",
+    readOnWikipedia: "Read on Wikipedia",
+    settings: "Settings",
+    theme: "Theme",
+    language: "Language",
+    takeQuizAbout: "Take a Quiz About {country}",
+    all: "All",
+    country: "Country",
+    africa: "Africa",
+    americas: "Americas",
+    asia: "Asia",
+    europe: "Europe",
+    oceania: "Oceania",
+    whatIsCapitalOf: "What is the capital of {country}?",
+    correct: "Correct!",
+    incorrect: "Not quite.",
+    next: "Next",
+    score: "Score",
+    favorites: "Favorites",
+    noFavoritesYet: "No favorites yet. Tap the heart on a country to save it here.",
+  },
+  de: {
+    appName: "Kenne die Welt",
+    tagline: "Ein Land nach dem anderen.",
+    descriptionLine1: "Bei jedem Besuch wird ein zufälliges Land angezeigt — Flagge, Lage",
+    descriptionLine2: "auf der Karte und mehr. Durchsuche die Liste oder teste dich im Quiz.",
+    moreInfo: "Mehr Infos...",
+    searchPlaceholder: "Land suchen...",
+    explore: "Entdecken",
+    list: "Liste",
+    quiz: "Quiz",
+    surpriseMe: "Überrasch mich",
+    seenOf: "von {total} gesehen",
+    world: "Welt",
+    continent: "Kontinent",
+    region: "Region",
+    capital: "Hauptstadt",
+    population: "Bevölkerung",
+    area: "Fläche",
+    density: "Dichte",
+    government: "Regierung",
+    founded: "Gegründet",
+    languages: "Sprachen",
+    currency: "Währung",
+    callingCode: "Vorwahl",
+    neighbours: "Nachbarn",
+    readOnWikipedia: "Auf Wikipedia lesen",
+    settings: "Einstellungen",
+    theme: "Design",
+    language: "Sprache",
+    takeQuizAbout: "Quiz über {country} starten",
+    all: "Alle",
+    country: "Land",
+    africa: "Afrika",
+    americas: "Amerika",
+    asia: "Asien",
+    europe: "Europa",
+    oceania: "Ozeanien",
+    whatIsCapitalOf: "Was ist die Hauptstadt von {country}?",
+    correct: "Richtig!",
+    incorrect: "Leider falsch.",
+    next: "Weiter",
+    score: "Punktzahl",
+    favorites: "Favoriten",
+    noFavoritesYet: "Noch keine Favoriten. Tippe auf das Herz, um ein Land zu speichern.",
+  },
+  fr: {
+    appName: "Connaître le Monde",
+    tagline: "Un pays à la fois.",
+    descriptionLine1: "Chaque visite affiche un pays au hasard — son drapeau, sa position",
+    descriptionLine2: "sur la carte et plus. Parcourez la liste ou testez-vous avec le quiz.",
+    moreInfo: "Plus d'infos...",
+    searchPlaceholder: "Rechercher un pays...",
+    explore: "Explorer",
+    list: "Liste",
+    quiz: "Quiz",
+    surpriseMe: "Surprends-moi",
+    seenOf: "sur {total} vus",
+    world: "Monde",
+    continent: "Continent",
+    region: "Région",
+    capital: "Capitale",
+    population: "Population",
+    area: "Superficie",
+    density: "Densité",
+    government: "Gouvernement",
+    founded: "Fondé",
+    languages: "Langues",
+    currency: "Monnaie",
+    callingCode: "Indicatif",
+    neighbours: "Voisins",
+    readOnWikipedia: "Lire sur Wikipédia",
+    settings: "Paramètres",
+    theme: "Thème",
+    language: "Langue",
+    takeQuizAbout: "Faire un quiz sur {country}",
+    all: "Tous",
+    country: "Pays",
+    africa: "Afrique",
+    americas: "Amériques",
+    asia: "Asie",
+    europe: "Europe",
+    oceania: "Océanie",
+    whatIsCapitalOf: "Quelle est la capitale de {country} ?",
+    correct: "Correct !",
+    incorrect: "Pas tout à fait.",
+    next: "Suivant",
+    score: "Score",
+    favorites: "Favoris",
+    noFavoritesYet: "Aucun favori pour l'instant. Touchez le cœur pour enregistrer un pays.",
+  },
+  it: {
+    appName: "Conosci il Mondo",
+    tagline: "Un paese alla volta.",
+    descriptionLine1: "Ogni visita mostra un paese casuale — la sua bandiera, la posizione",
+    descriptionLine2: "sulla mappa e altro. Sfoglia l'elenco o mettiti alla prova nel quiz.",
+    moreInfo: "Maggiori informazioni...",
+    searchPlaceholder: "Cerca un paese...",
+    explore: "Esplora",
+    list: "Elenco",
+    quiz: "Quiz",
+    surpriseMe: "Sorprendimi",
+    seenOf: "di {total} visti",
+    world: "Mondo",
+    continent: "Continente",
+    region: "Regione",
+    capital: "Capitale",
+    population: "Popolazione",
+    area: "Area",
+    density: "Densità",
+    government: "Governo",
+    founded: "Fondato",
+    languages: "Lingue",
+    currency: "Valuta",
+    callingCode: "Prefisso",
+    neighbours: "Confinanti",
+    readOnWikipedia: "Leggi su Wikipedia",
+    settings: "Impostazioni",
+    theme: "Tema",
+    language: "Lingua",
+    takeQuizAbout: "Fai un quiz su {country}",
+    all: "Tutti",
+    country: "Paese",
+    africa: "Africa",
+    americas: "Americhe",
+    asia: "Asia",
+    europe: "Europa",
+    oceania: "Oceania",
+    whatIsCapitalOf: "Qual è la capitale di {country}?",
+    correct: "Corretto!",
+    incorrect: "Non proprio.",
+    next: "Avanti",
+    score: "Punteggio",
+    favorites: "Preferiti",
+    noFavoritesYet: "Ancora nessun preferito. Tocca il cuore per salvare un paese.",
+  },
+  es: {
+    appName: "Conoce el Mundo",
+    tagline: "Un país a la vez.",
+    descriptionLine1: "Cada visita muestra un país al azar — su bandera, ubicación",
+    descriptionLine2: "en el mapa y más. Explora la lista o pon a prueba tus conocimientos.",
+    moreInfo: "Más información...",
+    searchPlaceholder: "Buscar un país...",
+    explore: "Explorar",
+    list: "Lista",
+    quiz: "Cuestionario",
+    surpriseMe: "Sorpréndeme",
+    seenOf: "de {total} vistos",
+    world: "Mundo",
+    continent: "Continente",
+    region: "Región",
+    capital: "Capital",
+    population: "Población",
+    area: "Área",
+    density: "Densidad",
+    government: "Gobierno",
+    founded: "Fundado",
+    languages: "Idiomas",
+    currency: "Moneda",
+    callingCode: "Código telefónico",
+    neighbours: "Países vecinos",
+    readOnWikipedia: "Leer en Wikipedia",
+    settings: "Ajustes",
+    theme: "Tema",
+    language: "Idioma",
+    takeQuizAbout: "Hacer un cuestionario sobre {country}",
+    all: "Todos",
+    country: "País",
+    africa: "África",
+    americas: "América",
+    asia: "Asia",
+    europe: "Europa",
+    oceania: "Oceanía",
+    whatIsCapitalOf: "¿Cuál es la capital de {country}?",
+    correct: "¡Correcto!",
+    incorrect: "No es correcto.",
+    next: "Siguiente",
+    score: "Puntuación",
+    favorites: "Favoritos",
+    noFavoritesYet: "Aún no hay favoritos. Toca el corazón para guardar un país.",
+  },
+  ur: {
+    appName: "دنیا کو جانیں",
+    tagline: "ایک وقت میں ایک ملک۔",
+    descriptionLine1: "ہر وزٹ میں ایک بے ترتیب ملک دکھایا جاتا ہے — اس کا پرچم، مقام",
+    descriptionLine2: "نقشے پر اور مزید۔ فہرست دیکھیں یا کوئز میں خود کو آزمائیں۔",
+    moreInfo: "مزید معلومات...",
+    searchPlaceholder: "ملک تلاش کریں...",
+    explore: "دریافت کریں",
+    list: "فہرست",
+    quiz: "کوئز",
+    surpriseMe: "مجھے حیران کریں",
+    seenOf: "{total} میں سے دیکھے گئے",
+    world: "دنیا",
+    continent: "براعظم",
+    region: "خطہ",
+    capital: "دارالحکومت",
+    population: "آبادی",
+    area: "رقبہ",
+    density: "کثافت",
+    government: "حکومت",
+    founded: "قیام",
+    languages: "زبانیں",
+    currency: "کرنسی",
+    callingCode: "کالنگ کوڈ",
+    neighbours: "پڑوسی ممالک",
+    readOnWikipedia: "ویکیپیڈیا پر پڑھیں",
+    settings: "ترتیبات",
+    theme: "تھیم",
+    language: "زبان",
+    takeQuizAbout: "{country} کے بارے میں کوئز لیں",
+    all: "تمام",
+    country: "ملک",
+    africa: "افریقہ",
+    americas: "امریکہ",
+    asia: "ایشیا",
+    europe: "یورپ",
+    oceania: "اوشیانا",
+    whatIsCapitalOf: "{country} کا دارالحکومت کیا ہے؟",
+    correct: "درست!",
+    incorrect: "درست نہیں۔",
+    next: "اگلا",
+    score: "اسکور",
+    favorites: "پسندیدہ",
+    noFavoritesYet: "ابھی تک کوئی پسندیدہ نہیں۔ ملک کو محفوظ کرنے کے لیے دل پر ٹیپ کریں۔",
+  },
+};
