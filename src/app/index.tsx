@@ -19,7 +19,7 @@ export default function Index() {
   useEffect(() => {
     const timer = setTimeout(() => {
       router.replace("/(tabs)");
-    }, 2500);
+    }, 1000);
 
     return () => clearTimeout(timer);
   }, []);

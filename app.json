@@ -16,7 +16,7 @@
         "backgroundColor": "#E6F4FE"
       },
       "predictiveBackGestureEnabled": false,
-      "package": "com.bilal_bhatti.WorldWise"
+      "package": "com.worldwise.app"
     },
     "web": {
       "output": "static",
@@ -38,6 +38,12 @@
     "experiments": {
       "typedRoutes": true,
       "reactCompiler": true
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "059c4d48-1de2-4209-8942-bcebf549edd0"
+      }
     }
   }
 }

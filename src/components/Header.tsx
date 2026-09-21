@@ -5,7 +5,6 @@ import {
   TextInput,
   Pressable,
   StyleSheet,
-  FlatList,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 
@@ -15,6 +14,7 @@ import ThemeLanguageMenu from "./ThemeLanguageMenu";
 import CountryFlag from "./CountryFlag";
 import { Country, searchCountries } from "@/data/countries";
 import { useRouter, usePathname } from "expo-router";
+
 interface HeaderProps {
   seenCount?: number;
   totalCount?: number;
@@ -76,60 +76,57 @@ export default function Header({
         </Pressable>
       </View>
 
+      {/* Description */}
+      <Text style={[styles.description, { color: theme.colors.textSecondary }, isRTL && styles.textRTL]}>
+        {t("descriptionLine1")} {t("descriptionLine2")}{" "}
+        <Text
+          onPress={() => router.push("/about")}
+          style={{ color: theme.colors.accent, fontWeight: "700" }}
+        >
+          {t("moreInfo")}
+        </Text>
+      </Text>
 
-
-{/* Description */}
-<Text style={[styles.description, { color: theme.colors.textSecondary }, isRTL && styles.textRTL]}>
-  {t("descriptionLine1")} {t("descriptionLine2")}{" "}
-  <Text
-    onPress={() => router.push("/about")}
-    style={{ color: theme.colors.accent, fontWeight: "700" }}
-  >
-    {t("moreInfo")}
-  </Text>
-</Text>
-
-      {/* Search */}
-      <View
-        style={[
-          styles.searchBox,
-          {
-            backgroundColor: theme.colors.inputBackground,
-            borderColor: theme.colors.inputBorder,
-          },
-          isRTL && styles.rowReverse,
-        ]}
-      >
-        <Ionicons name="search" size={16} color={theme.colors.textMuted} />
-        <TextInput
-          value={query}
-          onChangeText={setQuery}
-          placeholder={t("searchPlaceholder")}
-          placeholderTextColor={theme.colors.textMuted}
-          style={[
-            styles.searchInput,
-            { color: theme.colors.text, textAlign: isRTL ? "right" : "left" },
-          ]}
-        />
-        {query.length > 0 && (
-          <Pressable onPress={() => setQuery("")}>
-            <Ionicons name="close" size={16} color={theme.colors.textMuted} />
-          </Pressable>
-        )}
-      </View>
-
-      {results.length > 0 && (
+      {/* Search Bar Wrapper */}
+      <View style={styles.searchWrapper}>
         <View
           style={[
-            styles.resultsBox,
-            { backgroundColor: theme.colors.surface, borderColor: theme.colors.border },
+            styles.searchBox,
+            {
+              backgroundColor: theme.colors.inputBackground || theme.colors.surface,
+              borderColor: theme.colors.inputBorder || theme.colors.border,
+            },
+            isRTL && styles.rowReverse,
           ]}
         >
-          <FlatList
-            data={results.slice(0, 8)}
-            keyExtractor={(item) => item.cca3}
-            renderItem={({ item }) => (
+          <Ionicons name="search" size={16} color={theme.colors.textMuted} />
+          <TextInput
+            value={query}
+            onChangeText={setQuery}
+            placeholder={t("searchPlaceholder")}
+            placeholderTextColor={theme.colors.textMuted}
+            style={[
+              styles.searchInput,
+              { color: theme.colors.text, textAlign: isRTL ? "right" : "left" },
+            ]}
+          />
+          {query.length > 0 && (
+            <Pressable onPress={() => setQuery("")}>
+              <Ionicons name="close" size={16} color={theme.colors.textMuted} />
+            </Pressable>
+          )}
+        </View>
+
+        {results.length > 0 && (
+          <View
+            style={[
+              styles.resultsBox,
+              { backgroundColor: theme.colors.surface, borderColor: theme.colors.border },
+            ]}
+          >
+            {results.slice(0, 8).map((item) => (
               <Pressable
+                key={item.cca3}
                 style={[styles.resultRow, isRTL && styles.rowReverse]}
                 onPress={() => {
                   setQuery("");
@@ -142,15 +139,16 @@ export default function Header({
                     color: theme.colors.text,
                     marginLeft: isRTL ? 0 : 10,
                     marginRight: isRTL ? 10 : 0,
+                    fontWeight: "600",
                   }}
                 >
                   {item.name.common}
                 </Text>
               </Pressable>
-            )}
-          />
-        </View>
-      )}
+            ))}
+          </View>
+        )}
+      </View>
 
       {/* Pills + Surprise me */}
       <View style={[styles.actionsRow, isRTL && styles.rowReverse]}>
@@ -163,13 +161,13 @@ export default function Header({
                 onPress={() => goTo(tab)}
                 style={[
                   styles.pill,
-                  active && { backgroundColor: theme.colors.pillActiveBackground },
+                  active && { backgroundColor: theme.colors.pillActiveBackground || theme.colors.accent },
                 ]}
               >
                 <Text
                   style={[
                     styles.pillLabel,
-                    { color: active ? theme.colors.pillActiveText : theme.colors.textSecondary },
+                    { color: active ? (theme.colors.pillActiveText || "#FFFFFF") : theme.colors.textSecondary },
                   ]}
                 >
                   {t(tab)}
@@ -204,120 +202,26 @@ export default function Header({
 }
 
 const styles = StyleSheet.create({
-  container: {
-    paddingHorizontal: 16,
-    paddingTop: 8,
-    paddingBottom: 12,
-  },
-  topRow: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-  },
-  rowReverse: {
-    flexDirection: "row-reverse",
-  },
-  brandRow: {
-    flexDirection: "row",
-    alignItems: "center",
-    flexShrink: 1,
-  },
-  logoCircle: {
-    width: 36,
-    height: 36,
-    borderRadius: 18,
-    borderWidth: 1.5,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  brandTitle: {
-    fontSize: 18,
-    fontWeight: "800",
-  },
-  brandTagline: {
-    fontSize: 12,
-    fontStyle: "italic",
-  },
-  menuButton: {
-    width: 38,
-    height: 38,
-    borderRadius: 19,
-    borderWidth: 1,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  description: {
-    fontSize: 13,
-    lineHeight: 19,
-    marginTop: 12,
-  },
-  textRTL: {
-    textAlign: "right",
-    writingDirection: "rtl",
-  },
-  searchBox: {
-    flexDirection: "row",
-    alignItems: "center",
-    borderWidth: 1,
-    borderRadius: 10,
-    paddingHorizontal: 12,
-    height: 42,
-    marginTop: 14,
-    gap: 8,
-  },
-  searchInput: {
-    flex: 1,
-    fontSize: 14,
-  },
-  resultsBox: {
-    marginTop: 4,
-    borderWidth: 1,
-    borderRadius: 10,
-    maxHeight: 220,
-    overflow: "hidden",
-  },
-  resultRow: {
-    flexDirection: "row",
-    alignItems: "center",
-    paddingVertical: 10,
-    paddingHorizontal: 12,
-  },
-  actionsRow: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    marginTop: 14,
-    flexWrap: "wrap",
-    gap: 10,
-  },
-  pillGroup: {
-    flexDirection: "row",
-    borderRadius: 20,
-    padding: 3,
-  },
-  pill: {
-    paddingVertical: 6,
-    paddingHorizontal: 14,
-    borderRadius: 17,
-  },
-  pillLabel: {
-    fontSize: 13,
-    fontWeight: "700",
-  },
-  surpriseButton: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 6,
-    paddingVertical: 8,
-    paddingHorizontal: 14,
-    borderRadius: 20,
-  },
-  surpriseLabel: {
-    fontSize: 13,
-    fontWeight: "700",
-  },
-  seenCount: {
-    fontSize: 12,
-    marginTop: 10,
-  },
+  container: { paddingHorizontal: 16, paddingTop: 8 },
+  topRow: { flexDirection: "row", justifyContent: "space-between", alignItems: "center", marginBottom: 12 },
+  rowReverse: { flexDirection: "row-reverse" },
+  textRTL: { textAlign: "right", writingDirection: "rtl" },
+  brandRow: { flexDirection: "row", alignItems: "center" },
+  logoCircle: { width: 36, height: 36, borderRadius: 18, borderWidth: 1, justifyContent: "center", alignItems: "center" },
+  brandTitle: { fontSize: 18, fontWeight: "800" },
+  brandTagline: { fontSize: 11, fontWeight: "600" },
+  menuButton: { width: 38, height: 38, borderRadius: 10, borderWidth: 1, justifyContent: "center", alignItems: "center" },
+  description: { fontSize: 13, lineHeight: 18, marginBottom: 14 },
+  searchWrapper: { position: "relative", zIndex: 99, marginBottom: 14 },
+  searchBox: { flexDirection: "row", alignItems: "center", borderWidth: 1, borderRadius: 12, paddingHorizontal: 12, height: 44, gap: 8 },
+  searchInput: { flex: 1, fontSize: 14, height: "100%" },
+  resultsBox: { position: "absolute", top: 48, left: 0, right: 0, borderWidth: 1, borderRadius: 12, maxHeight: 220, elevation: 5, shadowColor: "#000", shadowOffset: { width: 0, height: 4 }, shadowOpacity: 0.15, shadowRadius: 6, zIndex: 100 },
+  resultRow: { flexDirection: "row", alignItems: "center", paddingVertical: 10, paddingHorizontal: 12, borderBottomWidth: StyleSheet.hairlineWidth, borderBottomColor: "rgba(150,150,150,0.2)" },
+  actionsRow: { flexDirection: "row", justifyContent: "space-between", alignItems: "center", marginBottom: 12 },
+  pillGroup: { flexDirection: "row", borderRadius: 12, padding: 3, gap: 2 },
+  pill: { paddingVertical: 6, paddingHorizontal: 12, borderRadius: 9 },
+  pillLabel: { fontSize: 12, fontWeight: "700" },
+  surpriseButton: { flexDirection: "row", alignItems: "center", gap: 6, paddingVertical: 8, paddingHorizontal: 12, borderRadius: 10 },
+  surpriseLabel: { fontSize: 12, fontWeight: "700" },
+  seenCount: { fontSize: 11, fontWeight: "700", marginBottom: 8, letterSpacing: 0.5 },
 });
