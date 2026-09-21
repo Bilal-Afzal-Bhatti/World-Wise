@@ -3,17 +3,17 @@
     "name": "World_Wise",
     "slug": "World_Wise",
     "version": "1.0.0",
-    "orientation": "portrait",
+   "orientation": "default",
     "icon": "./assets/app_images/icon.png",
     "scheme": "worldwise",
     "userInterfaceStyle": "automatic",
     "ios": {
+      "supportsTablet": true,
       "icon": "./assets/app_images/icon.png"
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/app_images/icon.png",
-        "backgroundColor": "#E6F4FE"
+        "backgroundImage": "./assets/app_images/icon.png"
       },
       "predictiveBackGestureEnabled": false,
       "package": "com.worldwise.app"
@@ -27,7 +27,6 @@
       [
         "expo-splash-screen",
         {
-          "backgroundColor": "#208AEF",
           "image": "./assets/app_images/splashScreen.jpg",
           "imageWidth": 200
         }
