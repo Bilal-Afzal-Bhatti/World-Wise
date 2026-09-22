@@ -1,6 +1,6 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { View, Text, ScrollView, StyleSheet, Pressable } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
 import { Gesture, GestureDetector } from "react-native-gesture-handler";
 import Animated, {
@@ -112,9 +112,16 @@ function getPathCentroid(d?: string): { x: number; y: number } | null {
 export default function ExploreScreen() {
   const { theme } = useAppTheme();
   const { t, isRTL } = useLanguage();
+  const insets = useSafeAreaInsets();
+
   const [country, setCountry] = React.useState<any>(() => getAllCountries()[0]);
   const [favorite, setFavorite] = React.useState(false);
   const [mapScope, setMapScope] = React.useState<"world" | "continent" | "region">("region");
+
+  // Real, measured header height (including the safe-area top inset) —
+  // replaces the previous hardcoded 190 / -180 magic numbers, which broke
+  // on devices with different notch/status-bar heights.
+  const [headerHeight, setHeaderHeight] = useState(0);
 
   const scale = useSharedValue(2.2);
   const savedScale = useSharedValue(2.2);
@@ -140,7 +147,7 @@ export default function ExploreScreen() {
         headerTranslateY.value = withTiming(0, { duration: 150 });
         headerOpacity.value = withTiming(1, { duration: 150 });
       } else if (currentScrollY > previousScrollY && currentScrollY > 40) {
-        headerTranslateY.value = withTiming(-180, { duration: 200 });
+        headerTranslateY.value = withTiming(-headerHeight, { duration: 200 });
         headerOpacity.value = withTiming(0, { duration: 200 });
       } else if (currentScrollY < previousScrollY) {
         headerTranslateY.value = withTiming(0, { duration: 200 });
@@ -237,6 +244,11 @@ export default function ExploreScreen() {
     savedTranslateY.value = targetY;
   }, [country?.cca3]);
 
+  // Every route into changing the selected country — the map, Surprise Me,
+  // search, and neighbour chips — all call this one function. Since every
+  // ScaleInText below is keyed on `country.cca3`, they ALL replay the same
+  // scale-in animation automatically no matter which of those triggered the
+  // change. Nothing extra needed here — kept exactly as-is.
   const selectCountry = (next: any) => {
     setCountry(next);
     setFavorite(false);
@@ -258,8 +270,23 @@ export default function ExploreScreen() {
   const showRandom = () => selectCountry(getRandomCountry());
 
   return (
-    <SafeAreaView style={[styles.screen, { backgroundColor: theme.colors.background }]} edges={["top"]}>
-      <Animated.View style={[styles.headerContainer, { backgroundColor: theme.colors.background }, headerAnimatedStyle]}>
+    <SafeAreaView style={[styles.screen, { backgroundColor: theme.colors.background }]} edges={[]}>
+      <Animated.View
+        onLayout={(e) => {
+          const measured = e.nativeEvent.layout.height;
+          if (measured > 0 && measured !== headerHeight) {
+            setHeaderHeight(measured);
+          }
+        }}
+        style={[
+          styles.headerContainer,
+          {
+            backgroundColor: theme.colors.background,
+            paddingTop: insets.top, // explicit safe-area padding — the fix for the header sitting under the notch/camera
+          },
+          headerAnimatedStyle,
+        ]}
+      >
         <Header
           seenCount={total}
           totalCount={total}
@@ -272,7 +299,12 @@ export default function ExploreScreen() {
         onScroll={scrollHandler}
         scrollEventThrottle={16}
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={styles.scrollContent}
+        contentContainerStyle={[
+          styles.scrollContent,
+          // Real measured header height + a little breathing room, instead
+          // of a hardcoded guess that only worked on one device size.
+          { paddingTop: headerHeight > 0 ? headerHeight + 12 : 190 },
+        ]}
       >
         <View style={styles.body}>
           <ScaleInText
@@ -591,7 +623,7 @@ const styles = StyleSheet.create({
   gestureWrapper: { flex: 1, width: "100%", height: "100%" },
   sectionLabel: { fontSize: 11, fontWeight: "700", letterSpacing: 1, marginBottom: 8 },
   grid: { flexDirection: "row", flexWrap: "wrap", gap: 10, marginBottom: 20 },
-  factCard: { flexBasis: "47%", borderWidth: 1, borderRadius: 12, padding: 12 },
+  factCard: { flexBasis: "48%", borderWidth: 1, borderRadius: 12, padding: 12 },
   factCardFull: { flexBasis: "100%" },
   factLabel: { fontSize: 11, fontWeight: "700", letterSpacing: 0.5, marginBottom: 4 },
   factValue: { fontSize: 16, fontWeight: "700" },
