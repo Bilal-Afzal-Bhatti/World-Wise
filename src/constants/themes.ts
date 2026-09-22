@@ -6,6 +6,10 @@ export interface AppTheme {
   /** small swatch color shown next to the theme name in the picker */
   swatch: string;
   colors: {
+    danger: string;
+    success: string;
+    successBackground: string;
+    dangerBackground: string;
     background: string;
     surface: string;
     card: string;
